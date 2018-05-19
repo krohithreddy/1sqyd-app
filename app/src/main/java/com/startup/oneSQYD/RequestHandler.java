@@ -1,5 +1,7 @@
 package com.startup.oneSQYD;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +21,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class RequestHandler {
+public class RequestHandler extends AsyncTask<String, Void, String> {
 
     Context _context;
 
@@ -30,13 +32,19 @@ public class RequestHandler {
     public JSONObject JSONdata;
 
     public String ResponseString;
+    public  Personaldetails pd;
 
-    public RequestHandler(Context context, String RequestType, String RequestURL, JSONObject JSONdata){
+    ProgressDialog Dialog ;
+
+    public boolean Result;
+
+    public RequestHandler(Context context, String RequestType, String RequestURL, JSONObject JSONdata,Personaldetails pd){
         this._context = context;
         this.RequestType = RequestType;
         this.RequestURL = RequestURL;
         this.JSONdata = JSONdata;
         this.ResponseString = null;
+        this.pd=pd;
     }
 
 //    private final String[] ResultString = new String[1];
@@ -44,14 +52,12 @@ public class RequestHandler {
 
 
 
-
-
-    public String SendPostRequest() {
-
-
-        new AsyncTask<String, Void, String>()
-        {
-            protected void onPreExecute () {}
+            protected void onPreExecute () {
+                Dialog = new ProgressDialog(_context);
+                Dialog.setMessage("Please wait...");
+                Dialog.setCancelable(false);
+                Dialog.show();
+            }
 
             protected String doInBackground (String...arg0){
 
@@ -67,6 +73,9 @@ public class RequestHandler {
                 conn.setRequestMethod(RequestType);
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
+
+                //TO add in header
+              //  conn.setRequestProperty("authorization", "bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imtlc3N5cm9oaXRocmVkZHlAZ21haWwuY29tIiwidXNlcklkIjoiNWIwMDc3MmVkOTE4MzgwNjRkNDc5MjIyIiwiaWF0IjoxNTI2NzU3Mjg2LCJleHAiOjE1MjY3NjA4ODZ9.wJKS_HZpQgp9HtvJ85MzDsAUp9B9M6BGCo7ZwPT5kjw");
 
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
@@ -117,6 +126,11 @@ public class RequestHandler {
 
             @Override
             protected void onPostExecute (String result){
+                super.onPostExecute(result);
+                if (Dialog.isShowing())
+                    Dialog.dismiss();
+
+                pd.postExecuteFunc(ResponseString,_context);
 //                ResultString[0] = result;
                 Toast.makeText(_context, result+"Connection Login successful",
                         Toast.LENGTH_LONG).show();
@@ -125,14 +139,16 @@ public class RequestHandler {
 //                    Toast.makeText(_context, "Connection Login successful",
 //                            Toast.LENGTH_LONG).show();
                 }
-
+               // Result = false;
         }
 
-        }.execute();
-//        System.out.println("Result String : "+ResultString[0]);
-    return ResponseString;
-
-    }
+//        }.execute();
+////        System.out.println("Result String : "+ResultString[0]);
+//        System.out.println("Waiting String : "+Result);
+//
+//    return ResponseString;
+//
+//    }
 
 //    public String getPostDataString(JSONObject params) throws Exception {
 //

@@ -1,5 +1,6 @@
 package com.startup.oneSQYD;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,8 +19,19 @@ public class Personaldetails extends AppCompatActivity {
     Sessionmanager personaldetailssession;
 
     RequestHandler object;
+    Context _context;
 
     public String response;
+    Personaldetails pd;
+
+    void postExecuteFunc(String s,Context _context) {
+        System.out.println("SendPostRequest output : " );
+        System.out.println(s);
+        //handle response
+
+        Toast.makeText(_context, s+" : responed well", Toast.LENGTH_LONG).show();
+
+    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -29,6 +41,7 @@ public class Personaldetails extends AppCompatActivity {
         final HashMap<String, String> profile =  personaldetailssession.getProfileDetails();
         System.out.println("Profile session : " + profile.get(Sessionmanager.personName));
         final Button ContinueButton = findViewById(R.id.ContinueButton);
+
         ContinueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 JSONObject postDataParams = new JSONObject();
@@ -41,12 +54,13 @@ public class Personaldetails extends AppCompatActivity {
 
                 Log.e("params",postDataParams.toString());
 
-                object = new RequestHandler(Personaldetails.this,"POST","user/login",postDataParams);
+                pd= new Personaldetails();
+             object= (RequestHandler) new RequestHandler(Personaldetails.this,"POST","user/login",postDataParams, pd).execute();
 
-                String s;
-                s = object.SendPostRequest();
-                System.out.println("SendPostRequest output : " + object.ResponseString);
-                Toast.makeText(Personaldetails.this, object.ResponseString + " : Received data Successful", Toast.LENGTH_LONG).show();
+
+
+
+              // Toast.makeText(Personaldetails.this, " : click finished", Toast.LENGTH_LONG).show();
 
             }
         });
