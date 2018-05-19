@@ -18,6 +18,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private static final String TAG = "TAG";
     private static int RC_SIGN_IN = 9001;
     GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInAccount account;
+    Sessionmanager newsession;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,28 +32,36 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
+         account = GetAccountDetails();
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button:
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-                System.out.println("The Display name : "+account.getDisplayName());
+//                System.out.println("The Display name : "+account.getDisplayName());
                 if(account == null){
                     System.out.println("New Login");
-                    signIn();}
-                else
-                    System.out.print("The email : " +
-                            account.getEmail());
+                    signIn();
+
+                }
+                else{
+                    System.out.print("The email : " + account.getEmail());
+                    Intent PersonalDetailsintent = new Intent(this, Personaldetails.class);
+                    LoginScreen.this.startActivity(PersonalDetailsintent);
+
+                }
                 break;
             // ...
         }
     }
 
+    public GoogleSignInAccount GetAccountDetails(){
+        account = GoogleSignIn.getLastSignedInAccount(LoginScreen.this);
+        return account;
+    }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -71,8 +81,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            account = completedTask.getResult(ApiException.class);
+            newsession = new Sessionmanager(LoginScreen.this);
+            newsession.CreateUserProfile(account);
+            Intent PersonalDetailsintent = new Intent(this, Personaldetails.class);
+            LoginScreen.this.startActivity(PersonalDetailsintent);
             // Signed in successfully, show authenticated UI.
             Log.w(TAG, "signInResult=" + account.getGivenName());
         } catch (ApiException e) {
