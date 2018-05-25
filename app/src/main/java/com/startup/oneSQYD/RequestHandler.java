@@ -63,7 +63,7 @@ public class RequestHandler extends AsyncTask<String, Void, String> {
 
             try {
 
-                URL url = new URL(_context.getString(R.string.ServerURL) + RequestURL); // here is your URL path
+                URL url = new URL(RequestURL); // here is your URL path
 
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -90,7 +90,7 @@ public class RequestHandler extends AsyncTask<String, Void, String> {
 
                 System.out.println("Response code upon connection : " + responseCode);
 
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_CREATED) {
 
                     BufferedReader in = new BufferedReader(new
                             InputStreamReader(
@@ -130,10 +130,10 @@ public class RequestHandler extends AsyncTask<String, Void, String> {
                 if (Dialog.isShowing())
                     Dialog.dismiss();
 
-                pd.postExecuteFunc(ResponseString,_context);
+                pd.postExecuteFunc(result,_context);
 //                ResultString[0] = result;
-                Toast.makeText(_context, result+"Connection Login successful",
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(_context, result+"Connection Login successful",
+//                        Toast.LENGTH_LONG).show();
                 System.out.println("Result : "+result);
                 if(result.equals("201")){
 //                    Toast.makeText(_context, "Connection Login successful",

@@ -9,6 +9,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.HashMap;
 
+import static java.lang.System.out;
+
 public class Sessionmanager {
     // Shared Preferences reference
     SharedPreferences pref;
@@ -20,17 +22,23 @@ public class Sessionmanager {
 
     int PRIVATE_MODE = 0;
 
-    public static final String personName = "Full Name";
+    public static final String personFamilyName = "Family Name";
 
-    public static final String personGivenName = "Full Given Name";
+    public static final String personGivenName = "Given Name";
 
-    public static final String personEmail = "EmailName";
+    public static final String personDisplayName = "Display Name";
 
-    public static final String personId = "personId";
+    public static final String personEmail = "Email";
 
-//    private static final Uri personPhoto = Uri.parse("personPhoto.com");
+    public static final String personPhoto = "personPhoto";
 
-    private static final String personFamilyName = "Family Name";
+    public static final String IS_USER_LOGIN = "false";
+
+    public static final String Token = "token";
+
+    public static final String IS_TOKEN_VALID = "false";
+
+    public static final String ServerId = "ServerId";
 
     public Sessionmanager(Context context){
         this._context = context;
@@ -38,14 +46,24 @@ public class Sessionmanager {
         editor = pref.edit();
     }
 
-    public void CreateUserProfile(GoogleSignInAccount acct){
+    public void SetToken(String token){
+        editor.putString(Token,token);
+        editor.putBoolean(IS_USER_LOGIN, true);
+        editor.commit();
+    }
+
+
+
+    public void CreateUserProfile(GoogleSignInAccount acct,String ServId){
         if (acct != null) {
-            editor.putString(personName,acct.getDisplayName());
+            editor.putString(personDisplayName,acct.getDisplayName());
             editor.putString(personGivenName,acct.getGivenName());
+            editor.putString(personFamilyName,acct.getFamilyName());
             editor.putString(personEmail,acct.getEmail());
-            editor.putString(personId,acct.getId());
+            editor.putString(personPhoto, String.valueOf(acct.getPhotoUrl()));
+            editor.putBoolean(IS_USER_LOGIN, true);
+            editor.putString(ServerId,ServId);
             editor.commit();
-//            Uri personPhoto = acct.getPhotoUrl();
         }
     }
 
@@ -57,19 +75,22 @@ public class Sessionmanager {
         //Use hashmap to store user credentials
         HashMap<String, String> user = new HashMap<String, String>();
 
-        user.put(personName, pref.getString(personName, null));
+        user.put(personFamilyName, pref.getString(personFamilyName, null));
 
-        // user email id
         user.put(personEmail, pref.getString(personEmail, null));
 
         user.put(personGivenName, pref.getString(personGivenName, null));
 
-        user.put(personId, pref.getString(personId, null));
+        user.put(personDisplayName, pref.getString(personDisplayName, null));
 
-        // return user
+        user.put(personPhoto, pref.getString(personPhoto, null));
+
         return user;
     }
 
+    public boolean isUserLoggedIn(){
+        return pref.getBoolean(IS_USER_LOGIN, false);
+    }
 }
 
 
