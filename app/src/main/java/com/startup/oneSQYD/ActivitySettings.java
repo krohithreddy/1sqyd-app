@@ -3,22 +3,14 @@ package com.startup.oneSQYD;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
-
-    private SectionsPageAdapter mSectionsPageAdapter;
-
-    private ViewPager mViewPager;
-
+public class ActivitySettings extends AppCompatActivity{
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -26,71 +18,47 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    Intent intent0 = new Intent(ActivitySettings.this, MainActivity.class);
+                    startActivity(intent0);
+                    overridePendingTransition(0,0);
                     return true;
                 case R.id.navigation_invest:
-                    Intent intent1 = new Intent(MainActivity.this, ActivityInvest.class);
+                    Intent intent1 = new Intent(ActivitySettings.this, ActivityInvest.class);
                     startActivity(intent1);
                     overridePendingTransition(0,0);
 //                    mTextMessage.setText("Invest");
                     return true;
                 case R.id.navigation_reports:
-                    Intent intent2 = new Intent(MainActivity.this, ActivityReports.class);
+                    Intent intent2 = new Intent(ActivitySettings.this, ActivityReports.class);
                     startActivity(intent2);
                     overridePendingTransition(0,0);
 //                    mTextMessage.setText("Reports");
                     return true;
 
                 case R.id.navigation_settings:
-                    Intent intent3 = new Intent(MainActivity.this, ActivitySettings.class);
-                    startActivity(intent3);
-                    overridePendingTransition(0,0);
-//                    mTextMessage.setText("Settings");
+
                     return true;
             }
             return false;
         }
     };
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
 
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        TextView title = (TextView) findViewById(R.id.activityTitle3);
+        title.setText("This is Settings");
 
-        mViewPager = (ViewPager) findViewById(R.id.containermain);
-        setupViewPager(mViewPager);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_buy);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_sell);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_trade);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
+
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+        MenuItem menuItem = menu.getItem(3);
         menuItem.setChecked(true);
-
-
-
     }
-
-    private void setupViewPager(ViewPager viewPager) {
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TabBuyFragment());
-        adapter.addFragment(new TabSellFragment());
-        adapter.addFragment(new TabtradeFragment());
-        viewPager.setAdapter(adapter);
-    }
-
 }

@@ -18,20 +18,7 @@
             android:layout_height="50dp"
             android:id="@+id/rellayouttopbar"
             android:layout_alignParentTop="true"
-            >
-
-            <android.support.design.widget.AppBarLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/windowBackground">
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </android.support.design.widget.AppBarLayout>
+            android:background="?android:attr/windowBackground">
 
 
 
@@ -44,16 +31,16 @@
             android:layout_above="@id/rellayoutbottombar"
             android:layout_below="@id/rellayouttopbar">
 
-            <android.support.v4.view.ViewPager
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/containermain"
-
-                >
-            </android.support.v4.view.ViewPager>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:textAlignment="center"
+                android:id="@+id/activityTitle3"/>
 
 
         </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
