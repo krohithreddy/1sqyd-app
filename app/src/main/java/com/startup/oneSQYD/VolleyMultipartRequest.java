@@ -16,6 +16,7 @@ package com.startup.oneSQYD;
         import java.io.UnsupportedEncodingException;
         import java.util.Map;
 
+
 public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     private final String twoHyphens = "--";
@@ -170,7 +171,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         ByteArrayInputStream fileInputStream = new ByteArrayInputStream(dataFile.getContent());
         int bytesAvailable = fileInputStream.available();
 
-        int maxBufferSize = 1024 * 1024 * 5;
+        int maxBufferSize = 1024 * 1024 * 1;
         int bufferSize = Math.min(bytesAvailable, maxBufferSize);
         byte[] buffer = new byte[bufferSize];
 

@@ -53,7 +53,7 @@
             android:layout_weight="0.5">
 
             <Button
-                android:id="@+id/LandImage"
+                android:id="@+id/LandImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
@@ -61,7 +61,7 @@
                 android:text="Select Land Image" />
 
             <Button
-                android:id="@+id/SurveyImage"
+                android:id="@+id/SurveyImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
