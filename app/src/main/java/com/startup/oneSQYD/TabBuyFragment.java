@@ -3,6 +3,7 @@ package com.startup.oneSQYD;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TabBuyFragment extends Fragment {
+public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "TabBuyFragment";
 
     private Button btnTEST;
@@ -33,6 +34,8 @@ public class TabBuyFragment extends Fragment {
 
     RecyclerView recyclerView;
     Buy_Adapter buyAdapter;
+
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     List<LandCard> LandList;
@@ -57,60 +60,24 @@ public class TabBuyFragment extends Fragment {
         //Get Request
 
 
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-
-        FragmentSession = new Sessionmanager(getActivity().getApplicationContext());
-        final HashMap<String, String> profile =  FragmentSession.getProfileDetails();
-
-        final String Email = profile.get(FragmentSession.personEmail);
-
-
-        UserClient serviceGet =
-                ServiceGenerator.createServiceGetAllLands(UserClient.class,profile.get(FragmentSession.Token));
-
-        Call<ArrayList<LandCard>> call = serviceGet.getAllLands("bearer "+profile.get(FragmentSession.Token));
-        call.enqueue(new Callback<ArrayList<LandCard>>() {
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.post(new Runnable() {
             @Override
-            public void onResponse(Call<ArrayList<LandCard>> call, final Response<ArrayList<LandCard>> response) {
-
-                if(response.code()==200){
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            SetAdapter(response.body());
-                        }
-                    });
-                }
-                else if(response.code()==401){
-                    System.out.println(Email);
-                    FragmentSession.SignIn(Email);
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getActivity(), "App Session Expired, Reload Again ", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-                else if(response.code()==500){
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(getActivity(), "Could not get Lands, Try Again ", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<LandCard>> call, Throwable t) {
-
-                System.out.println("Failure!!!!!"+t);
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                loadData(swipeRefreshLayout);
             }
         });
+
+
+
+
 
 //        mProgressDialog.dismiss();
 
@@ -152,5 +119,70 @@ public class TabBuyFragment extends Fragment {
 
 
         return view;
+    }
+
+
+    public void loadData(final SwipeRefreshLayout swipeRefreshLayout){
+        FragmentSession = new Sessionmanager(getActivity().getApplicationContext());
+        final HashMap<String, String> profile =  FragmentSession.getProfileDetails();
+
+        final String Email = profile.get(FragmentSession.personEmail);
+
+        swipeRefreshLayout.setRefreshing(true);
+
+
+        UserClient serviceGet =
+                ServiceGenerator.createServiceGetAllLands(UserClient.class,profile.get(FragmentSession.Token));
+
+        Call<ArrayList<LandCard>> call = serviceGet.getAllLands("bearer "+profile.get(FragmentSession.Token));
+        call.enqueue(new Callback<ArrayList<LandCard>>() {
+            @Override
+            public void onResponse(Call<ArrayList<LandCard>> call, final Response<ArrayList<LandCard>> response) {
+
+                if(response.code()==200){
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            SetAdapter(response.body());
+                        }
+                    });
+//                    swipeRefreshLayout.setRefreshing(false);
+                }
+                else if(response.code()==401){
+                    System.out.println(Email);
+                    FragmentSession.SignIn(Email);
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), "App Session Expired, Reload Again ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    swipeRefreshLayout.setRefreshing(false);
+                }
+                else if(response.code()==500){
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), "Could not get Lands, Try Again ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<LandCard>> call, Throwable t) {
+
+                System.out.println("Failure!!!!!"+t);
+            }
+        });
+
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+
+        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swiper);
+        loadData(swipeRefreshLayout);
     }
 }
