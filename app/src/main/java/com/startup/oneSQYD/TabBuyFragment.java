@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,13 +35,14 @@ public class TabBuyFragment extends Fragment {
     Buy_Adapter buyAdapter;
 
 
-
     List<LandCard> LandList;
+
 
     public void SetAdapter(ArrayList<LandCard> landlist){
         ArrayList<LandCard> responselandlist = landlist;
 //                System.out.println(responselandlist.size());
         buyAdapter = new Buy_Adapter(getActivity().getApplicationContext(), (ArrayList<LandCard>) responselandlist);
+
         recyclerView.setAdapter(buyAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -64,6 +66,9 @@ public class TabBuyFragment extends Fragment {
         FragmentSession = new Sessionmanager(getActivity().getApplicationContext());
         final HashMap<String, String> profile =  FragmentSession.getProfileDetails();
 
+        final String Email = profile.get(FragmentSession.personEmail);
+
+
         UserClient serviceGet =
                 ServiceGenerator.createServiceGetAllLands(UserClient.class,profile.get(FragmentSession.Token));
 
@@ -71,11 +76,31 @@ public class TabBuyFragment extends Fragment {
         call.enqueue(new Callback<ArrayList<LandCard>>() {
             @Override
             public void onResponse(Call<ArrayList<LandCard>> call, final Response<ArrayList<LandCard>> response) {
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        SetAdapter(response.body());
-                    }
-                });
+
+                if(response.code()==200){
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            SetAdapter(response.body());
+                        }
+                    });
+                }
+                else if(response.code()==401){
+                    System.out.println(Email);
+                    FragmentSession.SignIn(Email);
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), "App Session Expired, Reload Again ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+                else if(response.code()==500){
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(getActivity(), "Could not get Lands, Try Again ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
 
             }
@@ -86,6 +111,8 @@ public class TabBuyFragment extends Fragment {
                 System.out.println("Failure!!!!!"+t);
             }
         });
+
+//        mProgressDialog.dismiss();
 
 //        Button InfoButton = (Button) view.findViewById(R.id.btnExpand);
 //        InfoButton.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.HashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Sessionmanager {
     // Shared Preferences reference
     SharedPreferences pref;
@@ -42,8 +46,9 @@ public class Sessionmanager {
         editor = pref.edit();
     }
 
+
     public void SetToken(String token){
-        System.out.println("SetToken ");
+        System.out.println("SetToken "+token);
         editor.putString(Token,token);
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.commit();
@@ -62,6 +67,30 @@ public class Sessionmanager {
             editor.putString(ServerId,ServId);
             editor.commit();
         }
+    }
+
+    public void SignIn(String EmailString)  {
+
+        UserClient.SignInJson Json = new UserClient.SignInJson(EmailString);
+
+        UserClient serviceGet =
+                ServiceGenerator.createServiceSignIn(UserClient.class);
+        Call<UserClient.ResponseSignInJson> call = serviceGet.UserSignIn(Json);
+        call.enqueue(new Callback<UserClient.ResponseSignInJson>() {
+            @Override
+            public void onResponse(Call<UserClient.ResponseSignInJson> call, Response<UserClient.ResponseSignInJson> response) {
+                UserClient.ResponseSignInJson responseObject = response.body();
+                SetToken(responseObject.getToken());
+            }
+
+            @Override
+            public void onFailure(Call<UserClient.ResponseSignInJson> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
 
     /**

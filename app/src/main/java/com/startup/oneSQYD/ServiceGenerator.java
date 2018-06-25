@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceGenerator  {
 
@@ -34,6 +35,23 @@ public class ServiceGenerator  {
 //    }
 
 
+    public static <S> S createServiceSignIn(Class<S> serviceClass) {
+
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        OkHttpClient client = httpClient.build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ServerUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .build();
+        return retrofit.create(serviceClass);
+    }
+
+
     public static <S> S createServiceGetAllLands(Class<S> serviceClass, final String Token) {
 
 
@@ -61,24 +79,15 @@ public class ServiceGenerator  {
 
     public static <S> S createServiceWithAuth(Class<S> serviceClass, String Token) {
 
-//        Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsbGlyb2hhbjlAZ21haWwuY29tIiwidXNlcklkIjoiNWIxYWI3NTYyNTk3NjkyMjI1NTFhNzM3IiwiaWF0IjoxNTI5ODU5NTI3LCJleHAiOjE1Mjk4NjMxMjd9.JqtluezPmMxgg79bE72N2m6js4zxlpQbeu20JHqpdDE";
 
-//        Interceptor interceptor = new Interceptor() {
-//            @Override
-//            public okhttp3.Response intercept(Chain chain) throws IOException {
-//                final Request request = chain.request().newBuilder()
-//                        .header("Authorization", "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsbGlyb2hhbjlAZ21haWwuY29tIiwidXNlcklkIjoiNWIxYWI3NTYyNTk3NjkyMjI1NTFhNzM3IiwiaWF0IjoxNTI5ODU5NTI3LCJleHAiOjE1Mjk4NjMxMjd9.JqtluezPmMxgg79bE72N2m6js4zxlpQbeu20JHqpdDE")
-//                        .build();
-//                return chain.proceed(request);
-//            }
-//        };
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        httpClient.addInterceptor(interceptor);
+
         OkHttpClient client = httpClient.build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ServerUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .build();
         return retrofit.create(serviceClass);
