@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -30,6 +28,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -90,21 +89,25 @@ public class TabSellFragment extends Fragment{
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
-                new AsyncTask<URI,String,String>(){
-                    protected String doInBackground(URI... paths) {
 
-                        UploadFile();
-                        return null;
-                    }
+                Intent SellLandIntent = new Intent(getActivity(), SellLandFormActivity.class);
+                getActivity().startActivity(SellLandIntent);
 
-
-
-                    protected void onPostExecute(String result) {
-                        Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
-
-                        RefreshFragment();
-                    }
-                }.execute();
+//                new AsyncTask<URI,String,String>(){
+//                    protected String doInBackground(URI... paths) {
+//
+//                        UploadFile();
+//                        return null;
+//                    }
+//
+//
+//
+//                    protected void onPostExecute(String result) {
+//
+//
+//                        RefreshFragment();
+//                    }
+//                }.execute();
 
 //                UploadFile(path1,path2);
 //                Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
@@ -230,10 +233,27 @@ public class TabSellFragment extends Fragment{
     }
 
 
+    public void SetToast(int responsecode){
+        if(responsecode == 201){
+            Toast.makeText(getActivity(), "Upload Success", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(getActivity(), "Upload Failed", Toast.LENGTH_SHORT).show();
+    }
+
+
     public void UploadFile(){
+
+
 
         FragmentSession = new Sessionmanager(getActivity().getApplicationContext());
         final HashMap<String, String> profile =  FragmentSession.getProfileDetails();
+
+//        getActivity().runOnUiThread(new Runnable() {
+//            public void run() {
+//                Toast.makeText(getActivity(), profile.get(FragmentSession.Token)+profile.get(FragmentSession.personEmail), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         // create upload service client
@@ -250,11 +270,15 @@ public class TabSellFragment extends Fragment{
         RequestBody Aadhar = createPartFromString("9989889655");
 
         // finally, execute the request
-        Call<ResponseBody> call = service.uploadMultipleFiles(Email, Aadhar, LandImage, SurveyImage);
+        Call<ResponseBody> call = service.uploadMultipleFiles("bearer "+profile.get(FragmentSession.Token),Email, Aadhar, LandImage, SurveyImage);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.v("Upload", "success");
+            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        SetToast(response.code());
+                    }
+                });
 
             }
 
@@ -263,6 +287,9 @@ public class TabSellFragment extends Fragment{
                 Log.e("Upload error:", t.getMessage());
             }
         });
+
+
+
     }
 
 }

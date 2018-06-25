@@ -1,15 +1,11 @@
 package com.startup.oneSQYD;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.HashMap;
-
-import static java.lang.System.out;
 
 public class Sessionmanager {
     // Shared Preferences reference
@@ -47,6 +43,7 @@ public class Sessionmanager {
     }
 
     public void SetToken(String token){
+        System.out.println("SetToken ");
         editor.putString(Token,token);
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.commit();
@@ -84,6 +81,10 @@ public class Sessionmanager {
         user.put(personDisplayName, pref.getString(personDisplayName, null));
 
         user.put(personPhoto, pref.getString(personPhoto, null));
+
+        user.put(Token,pref.getString(Token,null));
+
+        user.put(ServerId,pref.getString(ServerId,null));
 
         return user;
     }

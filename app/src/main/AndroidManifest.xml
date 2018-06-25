@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -27,11 +27,14 @@
         <activity android:name=".Personaldetails" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"></activity>
-        <activity android:name=".ActivityInvest"></activity>
-        <activity android:name=".ActivityReports"></activity>
-        <activity android:name=".ActivitySettings"></activity>
-
+            android:label="@string/title_activity_main" />
+        <activity android:name=".ActivityInvest" />
+        <activity android:name=".ActivityReports" />
+        <activity android:name=".ActivitySettings" />
+        <activity
+            android:name=".SellLandFormActivity"
+            android:label="@string/title_activity_sell_land_form"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -292,10 +292,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
                                     newsession.CreateUserProfile(account,ServerId);
                                     newsession.SetToken(token);
+                                    System.out.println("New Token : "+token);
                                     Intent MainActivityIntent = new Intent(LoginScreen.this, MainActivity.class);
                                     LoginScreen.this.startActivity(MainActivityIntent);
-                                    //              Toast.makeText(_context, "Connectin Login successful",
-                                    //                            Toast.LENGTH_LONG).show();
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
