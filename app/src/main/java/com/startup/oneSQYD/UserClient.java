@@ -45,6 +45,8 @@ public interface UserClient {
         }
     }
 
+    @GET("buy")
+    Call<ResponseBody> getAllBuy(@Header("Authorization") String token);
 
     @GET("land")
     Call<ArrayList<LandCard>> getAllLands(@Header("Authorization") String token);
@@ -64,11 +66,15 @@ public interface UserClient {
     @POST("land")
     Call<ResponseBody> uploadSellFormData(
             @Header("Authorization") String token,
-            @Part("Email") RequestBody Email,
-            @Part("Owner_name") RequestBody OwnerName,
-            @Part("Phone_number") RequestBody PhoneNumber,
-            @Part("Land_value") int LandValue,
-            @Part("Total_units") int TotalUnits,
+            @Part("Email") RequestBody Emailbody,
+            @Part("Owner_name") RequestBody Owner_name_body,
+            @Part("Phone_number") RequestBody Phone_number_body,
+            @Part("City") RequestBody Citybody,
+            @Part("Total_size") RequestBody Total_size_body,
+            @Part("Total_units") RequestBody Total_units_body,
+            @Part("Percent_sold") RequestBody Percent_sold_body,
+            @Part("Land_unit_value") RequestBody Land_unit_value_body,
+            @Part("Cost_unit_value") RequestBody Cost_unit_value_body,
             @Part MultipartBody.Part LandImage,
             @Part MultipartBody.Part SurveyImage);
 }

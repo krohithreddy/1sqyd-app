@@ -165,7 +165,7 @@
                     android:id="@+id/size"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Size"
+                    android:text="Land Size Details"
                     android:textAllCaps="true"
                     android:textColor="#020202"
                     android:textSize="17sp" />
@@ -174,12 +174,12 @@
                     android:layout_height="wrap_content"
                     >
                     <EditText
-                        android:id="@+id/total_size"
+                        android:id="@+id/Total_size"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="#020202"
                         android:textColor="#020202"
-                        android:hint="TOTAL SIZE"
+                        android:hint="Total Size (in Sqyrds)"
                         android:inputType="number"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -194,34 +194,48 @@
 
 
                         <EditText
-                            android:id="@+id/width"
+                            android:id="@+id/Width"
                             android:layout_weight="0.5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTint="#020202"
                             android:layout_marginTop="8dp"
                             android:textColor="#020202"
-                            android:hint="WIDTH"
+                            android:hint="Width(in yards)"
                             android:inputType="number"
                             android:singleLine="true" />
 
 
 
                         <EditText
-                            android:id="@+id/length"
+                            android:id="@+id/Length"
                             android:layout_weight="0.5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTint="#020202"
                             android:layout_marginTop="8dp"
                             android:textColor="#020202"
-                            android:hint="LENGTH"
+                            android:hint="Length(in yards)"
                             android:inputType="number"
                             android:singleLine="true" />
 
 
                 </LinearLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <EditText
+                        android:id="@+id/Percent_sold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="#020202"
+                        android:textColor="#020202"
+                        android:hint="Percentage of Land to Sell(in %)"
+                        android:inputType="number"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>
@@ -312,7 +326,7 @@
                     android:id="@+id/Valuation"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valuation"
+                    android:text="Land Unit Details"
                     android:textAllCaps="true"
                     android:textColor="#020202"
                     android:textSize="17sp" />
@@ -321,12 +335,12 @@
                     android:layout_height="wrap_content"
                     >
                     <EditText
-                        android:id="@+id/Land_value"
+                        android:id="@+id/Total_units"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="#020202"
                         android:textColor="#020202"
-                        android:hint="Expected value of the land"
+                        android:hint="Total Number of Units"
                         android:inputType="number"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
@@ -334,14 +348,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
-                        android:id="@+id/Units"
+                        android:id="@+id/Cost_unit_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableTint="#020202"
                         android:layout_marginTop="8dp"
                         android:textColor="#020202"
-                        android:hint="Number of units to be converted and to be sold"
+                        android:hint="Cost of each Unit (to sell)"
                         android:inputType="phone"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/Land_unit_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="#020202"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#020202"
+                        android:hint="Land Associated to each unit"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/Total_land_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTint="#020202"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#020202"
+                        android:hint="Total Land Value (to sell)"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
                         android:singleLine="true" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -419,6 +465,68 @@
 
                     <Button
                         android:id="@+id/Survey_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="choose file"
+                        android:textAlignment="center"
+                        android:textColor="#020202"
+                        android:textSize="17sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    >
+
+                    <TextView
+                        android:id="@+id/Pan_Image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="PAN Image"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#020202"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/Pan_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="choose file"
+                        android:textAlignment="center"
+                        android:textColor="#020202"
+                        android:textSize="17sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    >
+
+                    <TextView
+                        android:id="@+id/Aadhar_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Aadhar Image"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#020202"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/Aadhar_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"

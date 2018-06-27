@@ -27,14 +27,18 @@
         <activity android:name=".Personaldetails" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" />
-        <activity android:name=".ActivityInvest" />
+            android:label="@string/title_activity_main"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ActivityInvest"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ActivityReports" />
         <activity android:name=".ActivitySettings" />
         <activity
             android:name=".SellLandFormActivity"
             android:label="@string/title_activity_sell_land_form"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".BuyLandActivity"></activity>
     </application>
 
 </manifest>

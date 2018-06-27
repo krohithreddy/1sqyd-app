@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_invest"
         android:icon="@drawable/ic_business_black_24dp"
-        android:title="Invest" />
+        android:title="Develop" />
 
     <item
         android:id="@+id/navigation_reports"

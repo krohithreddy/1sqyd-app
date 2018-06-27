@@ -3,15 +3,18 @@ package com.startup.oneSQYD;
 
 import android.widget.Filter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
 public class CustomFilter extends Filter{
 
     Buy_Adapter adapter;
-    ArrayList<LandCard> filterList;
+    ArrayList<JSONObject> filterList;
 
-    public CustomFilter(ArrayList<LandCard> filterList,Buy_Adapter adapter)
+    public CustomFilter(ArrayList<JSONObject> filterList,Buy_Adapter adapter)
     {
         this.adapter=adapter;
         this.filterList=filterList;
@@ -29,15 +32,18 @@ public class CustomFilter extends Filter{
             //CHANGE TO UPPER
             constraint=constraint.toString().toUpperCase();
             //STORE OUR FILTERED PLAYERS
-            ArrayList<LandCard> filteredPlayers=new ArrayList<>();
+            ArrayList<JSONObject> filteredPlayers=new ArrayList<>();
 
             for (int i=0;i<filterList.size();i++)
             {
                 //CHECK
-                if(filterList.get(i).getEmail().toUpperCase().contains(constraint))
-                {
-                    //ADD PLAYER TO FILTERED PLAYERS
-                    filteredPlayers.add(filterList.get(i));
+                try {
+                    if (filterList.get(i).getString("City").toUpperCase().contains(constraint)) {
+                        //ADD PLAYER TO FILTERED PLAYERS
+                        filteredPlayers.add(filterList.get(i));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
                 }
             }
 
@@ -56,7 +62,7 @@ public class CustomFilter extends Filter{
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
 
-        adapter.LandCardList = (ArrayList<LandCard>) results.values;
+        adapter.BuyCardList = (ArrayList<JSONObject>) results.values;
 
         //REFRESH
         adapter.notifyDataSetChanged();
