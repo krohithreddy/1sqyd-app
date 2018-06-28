@@ -190,27 +190,29 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         }
 
                         if(!json.has("TradeId")) {
-                            json.put("TradeId",null);
+                            json.put("TradeId","");
                         }}catch (JSONException e){
                             e.printStackTrace();
                         }
 
                         try{
-                        db.execSQL("INSERT INTO 1SQYD VALUES('" + json.get("_id") +
-                                "','" + json.get("TradeId") +
-                                "','" + json.get("OrderId") +
-                                "','" + json.get("Email") +
-                                "','" + json.get("Owner_email") +
-                                "','" + json.get("LandId") +
-                                "','" + json.get("Phone_number") +
-                                "','" + json.get("Owner_name") +
-                                "','" + json.get("Total_units") +
-                                "','" + json.get("Total_size") +
-                                "','" + json.get("Available_units") +
-                                "','" + json.get("Percent_sold") +
-                                "','" + json.get("Land_unit_value") +
-                                "','" + json.get("Cost_unit_value") +
-                                "','" + json.get("City") + "');");}
+//                            System.out.println(json);
+//                            System.out.println(json.getString("TradeId"));
+                        db.execSQL("INSERT INTO Buytable VALUES('" + json.getString("_id") +
+                                "','" + json.getString("TradeId") +
+                                "','" + json.getString("OrderId") +
+                                "','" + json.getString("Email") +
+                                "','" + json.getString("Owner_email") +
+                                "','" + json.getString("LandId") +
+                                "','" + json.getString("Phone_number") +
+                                "','" + json.getString("Owner_name") +
+                                "','" + json.getString("Total_units") +
+                                "','" + json.getString("Total_size") +
+                                "','" + json.getString("Available_units") +
+                                "','" + json.getString("Percent_sold") +
+                                "','" + json.getString("Land_unit_value") +
+                                "','" + json.getString("Cost_unit_value") +
+                                "','" + json.getString("City") + "');");}
                                 catch (JSONException e){
                                     e.printStackTrace();
                                 }

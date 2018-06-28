@@ -38,7 +38,8 @@
             android:name=".SellLandFormActivity"
             android:label="@string/title_activity_sell_land_form"
             android:theme="@style/AppTheme" />
-        <activity android:name=".BuyLandActivity"></activity>
+        <activity android:name=".BuyLandActivity" />
+        <activity android:name=".BuyLandFinalActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuyLandFinalActivity">
+
+    <android.support.design.widget.AppBarLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:title="1SQYD"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/windowBackground"
+            android:gravity="top"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:id="@+id/TextInput"
+        android:padding="5dp">
+        <EditText
+            android:id="@+id/Units_to_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTint="#020202"
+            android:textColor="#020202"
+            android:hint="Enter Number of Units to Buy"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/Buy_land"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="22dp"
+        android:background="#FF0091EA"
+        android:text="Buy"
+        android:layout_below="@+id/TextInput"
+        android:layout_marginTop="40dp"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="25sp" />
+
+</RelativeLayout>

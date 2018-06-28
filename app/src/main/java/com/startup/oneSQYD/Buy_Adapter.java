@@ -2,6 +2,7 @@ package com.startup.oneSQYD;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -15,7 +16,6 @@ import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class Buy_Adapter extends  RecyclerView.Adapter<Buy_Adapter.BuyLandViewHo
     public ArrayList<JSONObject> BuyCardList,filterList;
     CustomFilter filter;
     String CardUsage;
-
+    ArrayList<String> CardLandIds = null;
     SQLiteDatabase db;
 
 
@@ -61,39 +61,47 @@ public class Buy_Adapter extends  RecyclerView.Adapter<Buy_Adapter.BuyLandViewHo
     @Override
     public void onBindViewHolder(@NonNull BuyLandViewHolder holder, int position) {
         final JSONObject buyCard = BuyCardList.get(position);
-        db = mCtx.openOrCreateDatabase("1SQYD", MODE_PRIVATE,null);
 
-        
-
-        try {
+        try{
+        if(!CardLandIds.contains(buyCard.getString("LandId"))) {
+            db = mCtx.openOrCreateDatabase("1SQYD", MODE_PRIVATE, null);
+            System.out.println(buyCard);
+            Cursor c1 = null, c2 = null;
+            c1 = db.rawQuery("SELECT SUM(Available_units) from Buytable WHERE LandId = '" + buyCard.getString("LandId") + "'", null);
+            c2 = db.rawQuery("SELECT MIN(Cost_unit_value) AS MinCost from Buytable WHERE LandId = '" + buyCard.getString("LandId") + "'", null);
+//            System.out.println(c1.getColumnCount());
+//            System.out.println(c1.getCount());
+            c1.moveToFirst();
+            c2.moveToFirst();
             holder.City_name.setText(buyCard.getString("City"));
-            holder.Available_units.setText(buyCard.getString("Available_units"));
-            holder.Min_cost.setText(buyCard.getString("Cost_unit_value"));
+            holder.Available_units.setText(c1.getString(0));
+            holder.Min_cost.setText(c2.getString(0));
             holder.Land_unit.setText(buyCard.getString("Land_unit_value"));
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (CardUsage == "buy") {
+                        Intent intentbuy = new Intent(mCtx, BuyLandActivity.class);
+                        intentbuy.putExtra("BuyCardSelected", buyCard.toString());
+                        mCtx.startActivity(intentbuy);
 
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(CardUsage=="buy"){
-//                    Toast.makeText(mCtx, "Land Image : "+landcard.getLandImage()+"Survey Image : "+landcard.getSurveyImage(), Toast.LENGTH_SHORT).show();
-
-                    Intent intentbuy = new Intent(mCtx,BuyLandActivity.class);
-                    intentbuy.putExtra("BuyCardSelected",buyCard.toString());
-                    mCtx.startActivity(intentbuy);
-
+                    }
+                    if (CardUsage == "invest")
+                        Toast.makeText(mCtx, "Invest not yet developed", Toast.LENGTH_SHORT).show();
 
                 }
-                if(CardUsage=="invest")
-                    Toast.makeText(mCtx, "Invest not yet developed", Toast.LENGTH_SHORT).show();
+            });
+            CardLandIds.add(buyCard.getString("LandId"));
+        }
+        else{
 
-            }
-        });
-
+        }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -111,7 +119,7 @@ public class Buy_Adapter extends  RecyclerView.Adapter<Buy_Adapter.BuyLandViewHo
         return filter;
     }
 
-    class BuyLandViewHolder extends RecyclerView.ViewHolder {
+    static class BuyLandViewHolder extends RecyclerView.ViewHolder {
 
         TextView City_name,Land_unit,Min_cost,Available_units;
 

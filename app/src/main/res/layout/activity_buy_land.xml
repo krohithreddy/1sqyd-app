@@ -1,9 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BuyLandActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <android.support.design.widget.AppBarLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="1SQYD"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?android:attr/windowBackground"
+                android:gravity="top"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="3dp"
+            android:padding="5dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/cardViewLandDetails"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City : "
+                    android:id="@+id/CityTitle"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/CityTitle"
+                    android:text="CityName"
+                    android:id="@+id/City"
+                    android:textColor="#000000"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginRight="5dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Area(in Sqyrds): "
+                    android:id="@+id/TotalAreaTitle"
+                    android:layout_marginTop="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_below="@+id/CityTitle"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/TotalAreaTitle"
+                    android:layout_below="@+id/City"
+                    android:background="@color/colorPrimary"
+                    android:text="Units"
+                    android:id="@+id/TotalArea"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="% of Land in Units : "
+                    android:id="@+id/Percent_sold_title"
+                    android:layout_marginTop="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_below="@+id/TotalAreaTitle"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/Percent_sold_title"
+                    android:layout_below="@+id/TotalArea"
+                    android:text="Percent_sold"
+                    android:id="@+id/Percent_sold"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Land per Unit : "
+                    android:id="@+id/Land_unit_size_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_below="@+id/Percent_sold_title"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/Land_unit_size_title"
+                    android:layout_below="@+id/Percent_sold"
+                    android:text="Land_unit_size"
+                    android:id="@+id/Land_unit_size"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Number of Units : "
+                    android:id="@+id/Total_units_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:layout_below="@+id/Land_unit_size_title"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/Total_units_title"
+                    android:layout_below="@+id/Land_unit_size"
+                    android:text="Total_units"
+                    android:id="@+id/Total_units"
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sellers Available : "
+            android:textSize="24sp"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewBuyland"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
