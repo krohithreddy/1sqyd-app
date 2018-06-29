@@ -43,13 +43,13 @@ public class Buy_Adapter_Seller extends RecyclerView.Adapter<Buy_Adapter_Seller.
         try {
             holder.Seller_name.setText(seller.getString("Owner_name"));
             holder.Phone_number.setText(seller.getString("Phone_number"));
-            holder.Available_units.setText(seller.getString("Total_units"));
+            holder.Available_units.setText(seller.getString("Available_units"));
             holder.Cost_unit_value.setText(seller.getString("Cost_unit_value"));
         }catch (JSONException e){
             e.printStackTrace();
         }
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.cardViewLandDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(mCtx,BuyLandFinalActivity.class);
@@ -73,12 +73,12 @@ public class Buy_Adapter_Seller extends RecyclerView.Adapter<Buy_Adapter_Seller.
 
         TextView Seller_name,Phone_number,Available_units,Cost_unit_value;
 
-        CardView cardView;
+        CardView cardViewLandDetails;
 
 
         public BuyLandViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.cardViewLandDetails);
+            cardViewLandDetails = itemView.findViewById(R.id.cardViewSellerBuy);
             Seller_name = itemView.findViewById(R.id.Seller_name);
             Phone_number = itemView.findViewById(R.id.Phone_number);
             Available_units = itemView.findViewById(R.id.Units_available);

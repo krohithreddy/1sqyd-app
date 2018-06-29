@@ -13,7 +13,7 @@
         android:padding="5dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewSellerBuy"
         android:layout_margin="5dp">
 
         <RelativeLayout
@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cost per Unit : "
+                android:text="Cost per Unit(INR) : "
                 android:id="@+id/Cost_unit_title"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_below="@+id/Units_available_title"

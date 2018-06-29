@@ -1,6 +1,7 @@
 package com.startup.oneSQYD;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -45,6 +47,73 @@ public interface UserClient {
         }
     }
 
+    public class OrderObject{
+        String LandId,Email,Owner_email,Quantity,Land_unit_value,Cost_unit_value,Total_size,Percent_sold,Total_units,Owner_name,Phone_number,City;
+
+        public OrderObject(String landId, String email, String owner_email, String quantity, String land_unit_value, String cost_unit_value, String total_size, String percent_sold, String total_units, String owner_name, String phone_number, String city) {
+            LandId = landId;
+            Email = email;
+            Owner_email = owner_email;
+            Quantity = quantity;
+            Land_unit_value = land_unit_value;
+            Cost_unit_value = cost_unit_value;
+            Total_size = total_size;
+            Percent_sold = percent_sold;
+            Total_units = total_units;
+            Owner_name = owner_name;
+            Phone_number = phone_number;
+            City = city;
+        }
+
+        public String getLandId() {
+            return LandId;
+        }
+
+        public String getEmail() {
+            return Email;
+        }
+
+        public String getOwner_email() {
+            return Owner_email;
+        }
+
+        public String getQuantity() {
+            return Quantity;
+        }
+
+        public String getLand_unit_value() {
+            return Land_unit_value;
+        }
+
+        public String getCost_unit_value() {
+            return Cost_unit_value;
+        }
+
+        public String getTotal_size() {
+            return Total_size;
+        }
+
+        public String getPercent_sold() {
+            return Percent_sold;
+        }
+
+        public String getTotal_units() {
+            return Total_units;
+        }
+
+        public String getOwner_name() {
+            return Owner_name;
+        }
+
+        public String getPhone_number() {
+            return Phone_number;
+        }
+
+        public String getCity() {
+            return City;
+        }
+    }
+
     @GET("buy")
     Call<ResponseBody> getAllBuy(@Header("Authorization") String token);
 
@@ -77,4 +146,8 @@ public interface UserClient {
             @Part("Cost_unit_value") RequestBody Cost_unit_value_body,
             @Part MultipartBody.Part LandImage,
             @Part MultipartBody.Part SurveyImage);
+
+
+    @POST("orders")
+    Call<ResponseBody> BuyLand(@HeaderMap Map<String,String> map, @Body OrderObject buylandobject);
 }

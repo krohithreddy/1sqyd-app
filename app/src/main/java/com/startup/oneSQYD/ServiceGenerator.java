@@ -14,7 +14,7 @@ public class ServiceGenerator  {
 //    FragmentSession = new ServiceGenerator(ServiceGenerator.this);
 //    final HashMap<String, String> profile =  FragmentSession.getProfileDetails();
 
-    private static final String ServerUrl = "http://192.168.1.103:3100/";
+    private static final String ServerUrl = "http://192.168.1.102:3100/";
 
 //    private static OkHttpClient httpClient =
 //            new OkHttpClient();

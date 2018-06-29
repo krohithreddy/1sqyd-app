@@ -39,7 +39,10 @@
             android:label="@string/title_activity_sell_land_form"
             android:theme="@style/AppTheme" />
         <activity android:name=".BuyLandActivity" />
-        <activity android:name=".BuyLandFinalActivity"></activity>
+        <activity android:name=".BuyLandFinalActivity"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
     </application>
 
 </manifest>

@@ -56,11 +56,15 @@ public class BuyLandActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Cursor c;
+        Cursor c = null;
         SQLiteDatabase db;
         db = openOrCreateDatabase("1SQYD",MODE_PRIVATE,null);
-        c = db.rawQuery("SELECT * FROM Buytable  ", null);
-        final ArrayList<JSONObject> resultSet = null;
+        try {
+            c = db.rawQuery("SELECT * FROM Buytable WHERE LandId = '"+jsonObject.getString("LandId")+"'", null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final ArrayList<JSONObject> resultSet = new ArrayList<JSONObject>();
         if (!(c.moveToFirst()) || c.getCount() == 0){
 
         }

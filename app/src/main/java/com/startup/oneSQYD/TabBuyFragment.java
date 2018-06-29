@@ -1,5 +1,6 @@
 package com.startup.oneSQYD;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -65,6 +66,18 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
 
+    public boolean isTableEmpty(SQLiteDatabase db, String tableName) {
+        Cursor cursor = db.rawQuery("Select * FROM Buytable", null);
+
+        if (cursor != null) {
+            if (cursor.getCount() == 0) {
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+        }
+        return false;
+    }
 
 
     @Nullable
@@ -73,11 +86,11 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
         View view = inflater.inflate(R.layout.fragmentbuy_layout,container,false);
 
 
-
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -88,6 +101,9 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
                 loadData(swipeRefreshLayout);
             }
         });
+
+
+
 
 
 //        mProgressDialog.dismiss();
@@ -145,6 +161,7 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
         final SQLiteDatabase db;
         db = getActivity().openOrCreateDatabase("1SQYD",MODE_PRIVATE,null);
 
+
         String query = "CREATE TABLE IF NOT EXISTS Buytable(_id VARCHAR,TradeId VARCHAR,OrderId VARCHAR,Email VARCHAR,Owner_email VARCHAR,LandId VARCHAR,Phone_number VARCHAR,Owner_name VARCHAR,Total_units VARCHAR,Total_size VARCHAR,Available_units VARCHAR,Percent_sold VARCHAR,Land_unit_value VARCHAR,Cost_unit_value VARCHAR,City VARCHAR);";
 
         db.execSQL(query);
@@ -182,6 +199,8 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         }
                     }
 
+                    db.execSQL("Delete from Buytable");
+
                     for(int i=0;i<list.size();i++){
                         JSONObject json = list.get(i);
                         try{
@@ -196,23 +215,27 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
                         }
 
                         try{
-//                            System.out.println(json);
-//                            System.out.println(json.getString("TradeId"));
-                        db.execSQL("INSERT INTO Buytable VALUES('" + json.getString("_id") +
-                                "','" + json.getString("TradeId") +
-                                "','" + json.getString("OrderId") +
-                                "','" + json.getString("Email") +
-                                "','" + json.getString("Owner_email") +
-                                "','" + json.getString("LandId") +
-                                "','" + json.getString("Phone_number") +
-                                "','" + json.getString("Owner_name") +
-                                "','" + json.getString("Total_units") +
-                                "','" + json.getString("Total_size") +
-                                "','" + json.getString("Available_units") +
-                                "','" + json.getString("Percent_sold") +
-                                "','" + json.getString("Land_unit_value") +
-                                "','" + json.getString("Cost_unit_value") +
-                                "','" + json.getString("City") + "');");}
+
+                            db.execSQL("INSERT INTO Buytable VALUES('" + json.getString("_id") +
+                                    "','" + json.getString("TradeId") +
+                                    "','" + json.getString("OrderId") +
+                                    "','" + json.getString("Email") +
+                                    "','" + json.getString("Owner_email") +
+                                    "','" + json.getString("LandId") +
+                                    "','" + json.getString("Phone_number") +
+                                    "','" + json.getString("Owner_name") +
+                                    "','" + json.getString("Total_units") +
+                                    "','" + json.getString("Total_size") +
+                                    "','" + json.getString("Available_units") +
+                                    "','" + json.getString("Percent_sold") +
+                                    "','" + json.getString("Land_unit_value") +
+                                    "','" + json.getString("Cost_unit_value") +
+                                    "','" + json.getString("City") + "');");
+//                            }else{
+//
+//                            }
+//
+                        }
                                 catch (JSONException e){
                                     e.printStackTrace();
                                 }
@@ -253,7 +276,6 @@ public class TabBuyFragment extends Fragment implements SwipeRefreshLayout.OnRef
                 System.out.println("Failure!!!!!"+t);
             }
         });
-
         swipeRefreshLayout.setRefreshing(false);
     }
 

@@ -93,7 +93,7 @@ android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Min Cost Available : "
+            android:text="Min Cost Available(INR) : "
             android:id="@+id/CostTitle"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_below="@+id/UnitAreatitle"
@@ -122,3 +122,4 @@ android:orientation="vertical">
 
 
 </LinearLayout>
+
